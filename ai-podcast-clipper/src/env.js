@@ -23,6 +23,12 @@ export const env = createEnv({
     AWS_S3_BUCKET: z.string(),
     PROCESS_VIDEO_ENDPOINT: z.string().url(),
     PROCESS_VIDEO_ENDPOINT_AUTH: z.string(),
+    STRIPE_SECRET_KEY: z.string(),
+    STRIPE_SMALL_CREDIT_PACK: z.string(),
+    STRIPE_MEDIUM_CREDIT_PACK: z.string(),
+    STRIPE_LARGE_CREDIT_PACK: z.string(),
+    BASE_URL: z.string().url(),
+    STRIPE_WEBHOOK_SECRET: z.string(),
   },
 
   /**
@@ -32,6 +38,7 @@ export const env = createEnv({
    */
   client: {
     // NEXT_PUBLIC_CLIENTVAR: z.string(),
+    NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY: z.string(),
   },
 
   /**
@@ -48,6 +55,14 @@ export const env = createEnv({
     AWS_S3_BUCKET: process.env.AWS_S3_BUCKET,
     PROCESS_VIDEO_ENDPOINT: process.env.PROCESS_VIDEO_ENDPOINT,
     PROCESS_VIDEO_ENDPOINT_AUTH: process.env.PROCESS_VIDEO_ENDPOINT_AUTH,
+    NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY:
+      process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY,
+    STRIPE_SECRET_KEY: process.env.STRIPE_SECRET_KEY,
+    STRIPE_SMALL_CREDIT_PACK: process.env.STRIPE_SMALL_CREDIT_PACK,
+    STRIPE_MEDIUM_CREDIT_PACK: process.env.STRIPE_MEDIUM_CREDIT_PACK,
+    STRIPE_LARGE_CREDIT_PACK: process.env.STRIPE_LARGE_CREDIT_PACK,
+    BASE_URL: process.env.BASE_URL,
+    STRIPE_WEBHOOK_SECRET: process.env.STRIPE_WEBHOOK_SECRET,
   },
   /**
    * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation. This is especially

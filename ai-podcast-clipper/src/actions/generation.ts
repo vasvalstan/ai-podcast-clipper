@@ -1,7 +1,12 @@
 "use server";
 
+import { GetObjectCommand, S3Client } from "@aws-sdk/client-s3";
+import { env } from "~/env";
+import { revalidatePath } from "next/cache";
 import { inngest } from "~/inngest/client";
 import { db } from "~/server/db";
+import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
+import { auth } from "~/server/auth";
 
 export async function processVideo(uploadedFileId: string) {
   const uploadedVideo = await db.uploadedFile.findUniqueOrThrow({
@@ -33,4 +38,45 @@ export async function processVideo(uploadedFileId: string) {
       uploaded: true,
     },
   });
+
+  revalidatePath("/dashboard");
+}
+
+export async function getClipPlayUrl(
+  clipId: string,
+): Promise<{ succes: boolean; url?: string; error?: string }> {
+  const session = await auth();
+  if (!session?.user?.id) {
+    return { succes: false, error: "Unauthorized" };
+  }
+
+  try {
+    const clip = await db.clip.findUniqueOrThrow({
+      where: {
+        id: clipId,
+        userId: session.user.id,
+      },
+    });
+
+    const s3Client = new S3Client({
+      region: env.AWS_REGION,
+      credentials: {
+        accessKeyId: env.AWS_ACCESS_KEY_ID,
+        secretAccessKey: env.AWS_SECRET_ACCESS_KEY,
+      },
+    });
+
+    const command = new GetObjectCommand({
+      Bucket: env.AWS_S3_BUCKET,
+      Key: clip.s3Key,
+    });
+
+    const signedUrl = await getSignedUrl(s3Client, command, {
+      expiresIn: 3600,
+    });
+
+    return { succes: true, url: signedUrl };
+  } catch (error) {
+    return { succes: false, error: "Failed to generate play URL." };
+  }
 }

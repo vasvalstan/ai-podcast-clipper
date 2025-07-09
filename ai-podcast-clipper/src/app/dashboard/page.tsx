@@ -46,7 +46,7 @@ export default async function DashboardPage() {
     userData?.uploadedFiles.map((file) => ({
       id: file.id,
       s3Key: file.s3Key,
-      fileName: file.displayName || "Unknown filename",
+      filename: file.displayName || "Unknown filename",
       status: file.status,
       clipsCount: file._count.clips,
       createdAt: file.createdAt,
