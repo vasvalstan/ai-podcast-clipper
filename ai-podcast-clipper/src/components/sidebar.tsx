@@ -85,9 +85,9 @@ export default function Sidebar({ credits, email }: SidebarProps) {
       <div className="flex items-center gap-2 px-4 py-4">
         <Link href="/dashboard" className="flex items-center">
           <div className="font-sans text-xl font-medium tracking-tight">
-            <span className="text-foreground">pod</span>
+            <span className="text-foreground">post</span>
             <span className="font-light text-gray-500">/</span>
-            <span className="text-foreground font-light">clip</span>
+            <span className="text-foreground font-light">social</span>
           </div>
         </Link>
       </div>
