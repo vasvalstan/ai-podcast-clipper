@@ -4,7 +4,7 @@ import { auth } from "~/server/auth";
 import type { ReactNode } from "react";
 import { redirect } from "next/navigation";
 import { db } from "~/server/db";
-import NavHeader from "~/components/nav-header";
+import Sidebar from "~/components/sidebar";
 import { Toaster } from "~/components/ui/sonner";
 
 export default async function DashboardLayout({
@@ -29,9 +29,9 @@ export default async function DashboardLayout({
   });
 
   return (
-    <div className="flex min-h-screen flex-col">
-      <NavHeader credits={user.credits} email={user.email} />
-      <main className="container mx-auto flex-1 py-6">{children}</main>
+    <div className="flex min-h-screen">
+      <Sidebar credits={user.credits} email={user.email} />
+      <main className="flex-1 px-6 py-6">{children}</main>
       <Toaster richColors />
     </div>
   );

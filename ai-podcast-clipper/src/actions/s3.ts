@@ -27,7 +27,7 @@ export async function generateUploadUrl(fileInfo: {
     },
   });
 
-  const fileExtension = fileInfo.fileName.split(".").pop() || "";
+  const fileExtension = fileInfo.fileName.split(".").pop() ?? "";
 
   const uniqueId = uuidv4();
   const key = `${uniqueId}/original.${fileExtension}`;
